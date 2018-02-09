@@ -1,0 +1,43 @@
+header {
+    height: 100px;
+    background-color: lightgreen;
+}
+header img {
+    float: left;
+    margin: 0px auto;
+}
+nav {
+    width: 960px;
+    margin: 0px auto;
+}
+header ul{
+    float: right;
+    border: 1px solid black;
+}
+header ul li{
+    display: inline-block;
+}
+a {
+    text-decoration: none;
+}
+.images {
+    float: left;
+    margin: 10px;
+    align-content: center;
+}
+
+div {
+    width: 960px;
+    margin: 10px auto;
+}
+
+div p {
+    clear: both;
+    width: 960px;
+    margin: 0px auto;
+}
+footer {
+    height: 100px;
+    background-color: lightgreen;
+    text-align: center;
+}
