@@ -20,7 +20,13 @@ header ul li{
 a {
     text-decoration: none;
 }
-.images {
+
+main img {
+    width: 300px;
+    height: 300px;
+}
+
+#img1, #img2, #img3 {
     float: left;
     margin: 10px;
     align-content: center;
@@ -39,5 +45,5 @@ div p {
 footer {
     height: 100px;
     background-color: lightgreen;
-    text-align: center;
+    text-align: center
 }
