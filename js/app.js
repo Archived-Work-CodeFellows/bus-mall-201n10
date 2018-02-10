@@ -44,9 +44,9 @@ function imageDisplay() {
   for(var i = 0; i < images.length; i++) {
     indexRand = Math.floor(Math.random()*ImageGetter.all.length);
     images[i].src = ImageGetter.all[indexRand].path;
-    }
-    // console.log(i);
-    compare[i] = images[i].src;
   }
+  // console.log(i);
+  compare[i] = images[i].src;
+
 }
 imageDisplay();
