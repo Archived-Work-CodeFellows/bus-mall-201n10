@@ -40,49 +40,55 @@ eventArea.addEventListener('click', imageDisplay);
 
 function imageDisplay() {
   var indexRand = 0;
-  for(var k = 0; k < images.length; k++) compare2[k] = images[k].src;
-  for(var i = 0; i < images.length; i++) {
-    indexRand = Math.floor(Math.random()*ImageGetter.all.length);
-    images[i].src = ImageGetter.all[indexRand].path;
-    for(var j = 0; j < images.length; j++){
-      if(compare2[j] === images[i].src) {
-        console.log('Previous Iteration at Position ' + i);
-        if(i === 0) {
-          indexRand = Math.floor(Math.random()*ImageGetter.all.length);
-          images[0].src = ImageGetter.all[indexRand].path;
-        } else i--;
-        break;
+  if(totalClicks <= 25) {
+    for(var k = 0; k < images.length; k++) compare2[k] = images[k].src;
+    for(var i = 0; i < images.length; i++) {
+      indexRand = Math.floor(Math.random()*ImageGetter.all.length);
+      images[i].src = ImageGetter.all[indexRand].path;
+      for(var j = 0; j < images.length; j++){
+        if(compare2[j] === images[i].src) {
+          console.log('Previous Iteration at Position ' + i);
+          if(i === 0) {
+            indexRand = Math.floor(Math.random()*ImageGetter.all.length);
+            images[0].src = ImageGetter.all[indexRand].path;
+          } else i--;
+          break;
+        }
+        if(compare[j] === images[i].src) {
+          console.log('Duplicate at position ' + i);
+          if(i === 0) {
+            indexRand = Math.floor(Math.random()*ImageGetter.all.length);
+            images[0].src = ImageGetter.all[indexRand].path;
+          } else i--;
+          break;
+        }
       }
-      if(compare[j] === images[i].src) {
-        console.log('Duplicate at position ' + i);
-        if(i === 0) {
-          indexRand = Math.floor(Math.random()*ImageGetter.all.length);
-          images[0].src = ImageGetter.all[indexRand].path;
-        } else i--;
-        break;
-      }
+      compare[i] = images[i].src;
+      randomIndex[i] = indexRand;
     }
-    compare[i] = images[i].src;
-    randomIndex[i] = indexRand;
+    images[0].onclick = function (){
+      ImageGetter.all[randomIndex[0]].clicked++;
+      totalClicks++;
+    };
+    images[1].onclick = function (){
+      ImageGetter.all[randomIndex[1]].clicked++;
+      totalClicks++;
+    };
+    images[2].onclick = function (){
+      ImageGetter.all[randomIndex[2]].clicked++;
+      totalClicks++;
+    };
   }
-  images[0].onclick = function (){
-    ImageGetter.all[randomIndex[0]].clicked++;
-    totalClicks++;
-  };
-  images[1].onclick = function (){
-    ImageGetter.all[randomIndex[1]].clicked++;
-    totalClicks++;
-  };
-  images[2].onclick = function (){
-    ImageGetter.all[randomIndex[2]].clicked++;
-    totalClicks++;
-  };
-
   if(totalClicks === 25) {
-    for(var i = 0; i < ImageGetter.all.length; i++) {
+    var resultElement = document.getElementById('results');
+    var ulElement = document.createElement('ul');
+    resultElement.appendChild(ulElement);
+    for(i = 0; i < ImageGetter.all.length; i++) {
       console.log(ImageGetter.all[i].name + ' ' + ImageGetter.all[i].clicked);
+      var liElement = document.createElement('li');
+      
     }
   }
-  // console.log(totalClicks);
+  console.log(totalClicks);
 }
 imageDisplay();
