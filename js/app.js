@@ -5,10 +5,12 @@ ImageGetter.all = [];
 var images = [];
 var compare = [];
 var compare2 = [];
+var randomIndex = [];
 
 function ImageGetter(name, path){
   this.name = name;
   this.path = path;
+  this.clicked = 0;
   ImageGetter.all.push(this);
 
 }
@@ -37,7 +39,6 @@ var eventArea = document.getElementById('images');
 eventArea.addEventListener('click', imageDisplay);
 
 function imageDisplay() {
-  totalClicks++;
   var indexRand = 0;
   for(var k = 0; k < images.length; k++) compare2[k] = images[k].src;
   for(var i = 0; i < images.length; i++) {
@@ -45,7 +46,7 @@ function imageDisplay() {
     images[i].src = ImageGetter.all[indexRand].path;
     for(var j = 0; j < images.length; j++){
       if(compare2[j] === images[i].src) {
-        console.log('Previous Iteration at ' + i);
+        console.log('Previous Iteration at Position ' + i);
         if(i === 0) {
           indexRand = Math.floor(Math.random()*ImageGetter.all.length);
           images[0].src = ImageGetter.all[indexRand].path;
@@ -53,7 +54,7 @@ function imageDisplay() {
         break;
       }
       if(compare[j] === images[i].src) {
-        console.log('Duplicate at position' + i);
+        console.log('Duplicate at position ' + i);
         if(i === 0) {
           indexRand = Math.floor(Math.random()*ImageGetter.all.length);
           images[0].src = ImageGetter.all[indexRand].path;
@@ -62,7 +63,26 @@ function imageDisplay() {
       }
     }
     compare[i] = images[i].src;
+    randomIndex[i] = indexRand;
   }
-  console.log(totalClicks);
+  images[0].onclick = function (){
+    ImageGetter.all[randomIndex[0]].clicked++;
+    totalClicks++;
+  };
+  images[1].onclick = function (){
+    ImageGetter.all[randomIndex[1]].clicked++;
+    totalClicks++;
+  };
+  images[2].onclick = function (){
+    ImageGetter.all[randomIndex[2]].clicked++;
+    totalClicks++;
+  };
+
+  if(totalClicks === 25) {
+    for(var i = 0; i < ImageGetter.all.length; i++) {
+      console.log(ImageGetter.all[i].name + ' ' + ImageGetter.all[i].clicked);
+    }
+  }
+  // console.log(totalClicks);
 }
 imageDisplay();
