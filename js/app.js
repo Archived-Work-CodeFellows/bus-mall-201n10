@@ -1,6 +1,10 @@
 'use strict';
 
+var totalClicks = 0;
 ImageGetter.all = [];
+var images = [];
+var compare = [];
+var compare2 = [];
 
 function ImageGetter(name, path){
   this.name = name;
@@ -27,18 +31,22 @@ new ImageGetter('usb', 'img/usb.gif');
 new ImageGetter('water-can', 'img/water-can.jpg');
 new ImageGetter('wine-glass', 'img/wine-glass.jpg');
 
-var images = [];
-
 for(var i = 0; i < 3; i++) images.push(document.getElementById('img'+(i+1)));
 
 var eventArea = document.getElementById('images');
 eventArea.addEventListener('click', imageDisplay);
 
 function imageDisplay() {
+  totalClicks++;
   var indexRand = 0;
+  for(var k = 0; k < images.length; k++) compare2[k] = images[k].src;
+
   for(var i = 0; i < images.length; i++) {
     indexRand = Math.floor(Math.random()*ImageGetter.all.length);
     images[i].src = ImageGetter.all[indexRand].path;
+    }
+    // console.log(i);
+    compare[i] = images[i].src;
   }
 }
 imageDisplay();
