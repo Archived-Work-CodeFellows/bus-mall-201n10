@@ -39,43 +39,41 @@ eventArea.addEventListener('click', imageDisplay);
 
 function imageDisplay() {
   var indexRand = 0;
-  if(totalClicks <= 25) {
-    for(var k = 0; k < images.length; k++) compare2[k] = images[k].src;
-    for(var i = 0; i < images.length; i++) {
-      indexRand = Math.floor(Math.random()*ImageGetter.all.length);
-      images[i].src = ImageGetter.all[indexRand].path;
-      for(var j = 0; j < images.length; j++){
-        if(compare2[j] === images[i].src) {
-          if(i === 0) {
-            indexRand = Math.floor(Math.random()*ImageGetter.all.length);
-            images[0].src = ImageGetter.all[indexRand].path;
-          } else i--;
-          break;
-        }
-        if(compare[j] === images[i].src) {
-          if(i === 0) {
-            indexRand = Math.floor(Math.random()*ImageGetter.all.length);
-            images[0].src = ImageGetter.all[indexRand].path;
-          } else i--;
-          break;
-        }
+  for(var k = 0; k < images.length; k++) compare2[k] = images[k].src;
+  for(var i = 0; i < images.length; i++) {
+    indexRand = Math.floor(Math.random()*ImageGetter.all.length);
+    images[i].src = ImageGetter.all[indexRand].path;
+    for(var j = 0; j < images.length; j++){
+      if(compare2[j] === images[i].src) {
+        if(i === 0) {
+          indexRand = Math.floor(Math.random()*ImageGetter.all.length);
+          images[0].src = ImageGetter.all[indexRand].path;
+        } else i--;
+        break;
       }
-      compare[i] = images[i].src;
-      randomIndex[i] = indexRand;
+      if(compare[j] === images[i].src) {
+        if(i === 0) {
+          indexRand = Math.floor(Math.random()*ImageGetter.all.length);
+          images[0].src = ImageGetter.all[indexRand].path;
+        } else i--;
+        break;
+      }
     }
-    images[0].onclick = function (){
-      ImageGetter.all[randomIndex[0]].clicked++;
-      totalClicks++;
-    };
-    images[1].onclick = function (){
-      ImageGetter.all[randomIndex[1]].clicked++;
-      totalClicks++;
-    };
-    images[2].onclick = function (){
-      ImageGetter.all[randomIndex[2]].clicked++;
-      totalClicks++;
-    };
+    compare[i] = images[i].src;
+    randomIndex[i] = indexRand;
   }
+  images[0].onclick = function (){
+    ImageGetter.all[randomIndex[0]].clicked++;
+    totalClicks++;
+  };
+  images[1].onclick = function (){
+    ImageGetter.all[randomIndex[1]].clicked++;
+    totalClicks++;
+  };
+  images[2].onclick = function (){
+    ImageGetter.all[randomIndex[2]].clicked++;
+    totalClicks++;
+  };
   if(totalClicks === 25) {
     var resultElement = document.getElementById('results');
     var resultTitle = document.createElement('h1');
@@ -88,6 +86,8 @@ function imageDisplay() {
       liElement.textContent = ImageGetter.all[i].name + ' voted: ' + ImageGetter.all[i].clicked;
       ulElement.appendChild(liElement);
     }
+    eventArea.removeEventListener('click',imageDisplay);
   }
+  console.log(totalClicks);
 }
 imageDisplay();
