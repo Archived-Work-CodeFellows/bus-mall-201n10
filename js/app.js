@@ -45,11 +45,11 @@ function imageDisplay() {
     images[i].src = ImageGetter.all[indexRand].path;
     for(var j = 0; j < images.length; j++){
       if(compare2[j] === images[i].src || compare[j] === images[i].src) {
+        console.log('Duplicate');
         if(i === 0) {
           do{
             indexRand = Math.floor(Math.random()*ImageGetter.all.length);
             images[0].src = ImageGetter.all[indexRand].path;
-            console.log('change');
           } while (indexRand === randomIndex[0]);
         } else i--;
         break;
