@@ -88,6 +88,5 @@ function imageDisplay() {
     }
     eventArea.removeEventListener('click',imageDisplay);
   }
-  console.log(totalClicks);
 }
 imageDisplay();
