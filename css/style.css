@@ -43,6 +43,10 @@ main img {
     height: 300px;
     border: 5px solid black;
 }
+main img:hover {
+    border-color: rgb(200,150,255);
+    transition: 150ms;
+}
 #img1, #img2, #img3 {
     float: left;
     margin: 15px 5px;
