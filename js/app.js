@@ -11,6 +11,7 @@ function ImageGetter(name, path){
   this.name = name;
   this.path = path;
   this.clicked = 0;
+  this.viewed = 0;
   ImageGetter.all.push(this);
 }
 
@@ -58,6 +59,9 @@ function imageDisplay() {
     compare[i] = images[i].src;
     randomIndex[i] = indexRand;
   }
+  for(i = 0; i < images.length; i++) {
+    ImageGetter.all[randomIndex[i]].viewed++;
+  }
   images[0].onclick = function (){
     ImageGetter.all[randomIndex[0]].clicked++;
     totalClicks++;
@@ -79,7 +83,7 @@ function imageDisplay() {
     resultElement.appendChild(ulElement);
     for(i = 0; i < ImageGetter.all.length; i++) {
       var liElement = document.createElement('li');
-      liElement.textContent = ImageGetter.all[i].name + ' voted: ' + ImageGetter.all[i].clicked;
+      liElement.textContent = ImageGetter.all[i].name + ' voted: ' + ImageGetter.all[i].clicked + ' and viewed ' + ImageGetter.all[i].viewed + ' time(s)';
       ulElement.appendChild(liElement);
     }
     eventArea.removeEventListener('click',imageDisplay);
