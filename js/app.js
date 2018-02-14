@@ -36,30 +36,38 @@ new ImageGetter('Wine-glass', 'img/wine-glass.jpg');
 for(var i = 0; i < 3; i++) images.push(document.getElementById('img'+(i+1)));
 
 var eventArea = document.getElementById('images');
+var ctx = document.getElementById('chart').getContext('2d');
 eventArea.addEventListener('click', imageDisplay);
 
 function chartDisplay() {
-  var ctx = document.getElementById('chart').getContext('2d');
-  var data = [];
+  var clicks = [];
+  var views = [];
   var labels = [];
   for(var i = 0; i < ImageGetter.all.length; i++) {
-    data.push(ImageGetter.all[i].clicked);
+    clicks.push(ImageGetter.all[i].clicked);
     labels.push(ImageGetter.all[i].name);
+    views.push(ImageGetter.all[i].viewed);
   }
-
   var chart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: labels,
       datasets: [{
         label: '# of votes',
-        data: data,
-        backgroundColor: 'black'
+        data: clicks,
+        backgroundColor: 'rgba(120,200,65,0.25)',
+        hoverBackgroundColor: 'rgba(120,200,65,0.15)'
+      }, {
+        label: '# of views',
+        data: views,
+        backgroundColor: 'rgba(185,130,150,0.25)'
       }]
     },
     options: {
       scales: {
+        xAxes: [{ stacked: true}],
         yAxes: [{
+          stacked: true,
           ticks: {
             beginAtZero: true
           }

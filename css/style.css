@@ -31,11 +31,11 @@ main img {
     margin: 10px;
     align-content: center;
 }
-
 div {
     width: 960px;
     margin: 10px auto;
 }
+
 #results ul {
     text-align: center;
 }
