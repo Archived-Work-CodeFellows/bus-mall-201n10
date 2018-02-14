@@ -11,6 +11,7 @@ function ImageGetter(name, path){
   this.name = name;
   this.path = path;
   this.clicked = 0;
+  this.viewed = 0;
   ImageGetter.all.push(this);
 }
 
@@ -35,7 +36,46 @@ new ImageGetter('Wine-glass', 'img/wine-glass.jpg');
 for(var i = 0; i < 3; i++) images.push(document.getElementById('img'+(i+1)));
 
 var eventArea = document.getElementById('images');
+var ctx = document.getElementById('chart').getContext('2d');
 eventArea.addEventListener('click', imageDisplay);
+
+function chartDisplay() {
+  var clicks = [];
+  var views = [];
+  var labels = [];
+  for(var i = 0; i < ImageGetter.all.length; i++) {
+    clicks.push(ImageGetter.all[i].clicked);
+    labels.push(ImageGetter.all[i].name);
+    views.push(ImageGetter.all[i].viewed);
+  }
+  var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '# of votes',
+        data: clicks,
+        backgroundColor: 'rgba(120,200,65,0.25)',
+        hoverBackgroundColor: 'rgba(120,200,65,0.15)'
+      }, {
+        label: '# of views',
+        data: views,
+        backgroundColor: 'rgba(185,130,150,0.25)'
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [{ stacked: true}],
+        yAxes: [{
+          stacked: true,
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
 
 function imageDisplay() {
   var indexRand = 0;
@@ -58,6 +98,9 @@ function imageDisplay() {
     compare[i] = images[i].src;
     randomIndex[i] = indexRand;
   }
+  for(i = 0; i < images.length; i++) {
+    ImageGetter.all[randomIndex[i]].viewed++;
+  }
   images[0].onclick = function (){
     ImageGetter.all[randomIndex[0]].clicked++;
     totalClicks++;
@@ -71,17 +114,7 @@ function imageDisplay() {
     totalClicks++;
   };
   if(totalClicks === 25) {
-    var resultElement = document.getElementById('results');
-    var resultTitle = document.createElement('h1');
-    resultTitle.textContent = 'Results';
-    var ulElement = document.createElement('ul');
-    resultElement.appendChild(resultTitle);
-    resultElement.appendChild(ulElement);
-    for(i = 0; i < ImageGetter.all.length; i++) {
-      var liElement = document.createElement('li');
-      liElement.textContent = ImageGetter.all[i].name + ' voted: ' + ImageGetter.all[i].clicked;
-      ulElement.appendChild(liElement);
-    }
+    chartDisplay();
     eventArea.removeEventListener('click',imageDisplay);
   }
 }
