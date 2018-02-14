@@ -38,6 +38,37 @@ for(var i = 0; i < 3; i++) images.push(document.getElementById('img'+(i+1)));
 var eventArea = document.getElementById('images');
 eventArea.addEventListener('click', imageDisplay);
 
+function chartDisplay() {
+  var ctx = document.getElementById('chart').getContext('2d');
+  var data = [];
+  var labels = [];
+  for(var i = 0; i < ImageGetter.all.length; i++) {
+    data.push(ImageGetter.all[i].clicked);
+    labels.push(ImageGetter.all[i].name);
+  }
+
+  var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '# of votes',
+        data: data,
+        backgroundColor: 'black'
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
+
 function imageDisplay() {
   var indexRand = 0;
   for(var k = 0; k < images.length; k++) compare2[k] = images[k].src;
@@ -85,6 +116,7 @@ function imageDisplay() {
       var liElement = document.createElement('li');
       liElement.textContent = ImageGetter.all[i].name + ' voted: ' + ImageGetter.all[i].clicked + ' and viewed ' + ImageGetter.all[i].viewed + ' time(s)';
       ulElement.appendChild(liElement);
+      chartDisplay();
     }
     eventArea.removeEventListener('click',imageDisplay);
   }
