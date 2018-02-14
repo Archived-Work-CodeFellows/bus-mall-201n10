@@ -79,24 +79,26 @@ function chartDisplay() {
 
 function imageDisplay() {
   var indexRand = 0;
-  for(var k = 0; k < images.length; k++) compare2[k] = images[k].src;
+  for(var k = 0; k < images.length; k++) compare2[k] = randomIndex[k];
+
   for(var i = 0; i < images.length; i++) {
     indexRand = Math.floor(Math.random()*ImageGetter.all.length);
-    images[i].src = ImageGetter.all[indexRand].path;
+    randomIndex[i] = indexRand;
     for(var j = 0; j < images.length; j++){
-      if(compare2[j] === images[i].src || compare[j] === images[i].src) {
+      if(compare2[j] === randomIndex[i] || compare[j] === randomIndex[i]) {
         console.log('Duplicate');
         if(i === 0) {
           do{
             indexRand = Math.floor(Math.random()*ImageGetter.all.length);
-            images[0].src = ImageGetter.all[indexRand].path;
-          } while (indexRand === randomIndex[0]);
+            randomIndex[0] = indexRand;
+          }
+          while (compare[0] === randomIndex[0]);
         } else i--;
         break;
       }
     }
-    compare[i] = images[i].src;
-    randomIndex[i] = indexRand;
+    compare[i] = randomIndex[i];
+    images[i].src = ImageGetter.all[randomIndex[i]].path;
   }
   for(i = 0; i < images.length; i++) {
     ImageGetter.all[randomIndex[i]].viewed++;
