@@ -114,18 +114,7 @@ function imageDisplay() {
     totalClicks++;
   };
   if(totalClicks === 25) {
-    var resultElement = document.getElementById('results');
-    var resultTitle = document.createElement('h1');
-    resultTitle.textContent = 'Results';
-    var ulElement = document.createElement('ul');
-    resultElement.appendChild(resultTitle);
-    resultElement.appendChild(ulElement);
-    for(i = 0; i < ImageGetter.all.length; i++) {
-      var liElement = document.createElement('li');
-      liElement.textContent = ImageGetter.all[i].name + ' voted: ' + ImageGetter.all[i].clicked + ' and viewed ' + ImageGetter.all[i].viewed + ' time(s)';
-      ulElement.appendChild(liElement);
-      chartDisplay();
-    }
+    chartDisplay();
     eventArea.removeEventListener('click',imageDisplay);
   }
 }
