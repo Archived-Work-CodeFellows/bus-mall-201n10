@@ -98,8 +98,8 @@ function imageDisplay() {
       }
     }
     compare[i] = randomIndex[i];
-    images[i].src = ImageGetter.all[randomIndex[i]].path;
   }
+  for(i = 0; i < 3; i++) images[i].src = ImageGetter.all[randomIndex[i]].path;
   for(i = 0; i < images.length; i++) {
     ImageGetter.all[randomIndex[i]].viewed++;
   }
