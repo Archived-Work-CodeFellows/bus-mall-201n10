@@ -64,6 +64,7 @@ function chartDisplay() {
     }
   });
 }
+
 function imageDisplay() {
   var indexRand = 0;
   for(var k = 0; k < images.length; k++) compare2[k] = randomIndex[k];
