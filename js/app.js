@@ -22,8 +22,12 @@ function ImageGetter(name){
   this.pathMaker();
 }
 
-for(var i = 0; i < imgName.length; i++) new ImageGetter(imgName[i]);
-for(i = 0; i < 3; i++) images.push(document.getElementById('img'+(i+1)));
+function imageInit() {
+  for(var i = 0; i < imgName.length; i++) new ImageGetter(imgName[i]);
+}
+imageInit();
+
+for(var i = 0; i < 3; i++) images.push(document.getElementById('img'+(i+1)));
 
 var eventArea = document.getElementById('images');
 var ctx = document.getElementById('chart').getContext('2d');
@@ -104,7 +108,16 @@ function imageDisplay() {
   };
   if(totalClicks === 25) {
     chartDisplay();
-    eventArea.removeEventListener('click',imageDisplay);
+    eventArea.removeEventListener('click',imageDisplay); 
+    var dataStore = JSON.stringify(ImageGetter.all);
+    localStorage.setItem('dataStore', dataStore);
   }
 }
 imageDisplay();
+(function getLocalStorage() {
+  if(localStorage.dataStore) {
+    var dataStore = localStorage.getItem('dataStore');
+    var data = JSON.parse(dataStore);
+    console.log(data);
+  }
+})();
