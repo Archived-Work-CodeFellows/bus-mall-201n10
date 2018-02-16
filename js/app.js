@@ -21,25 +21,44 @@ function ImageGetter(name){
   };
   this.pathMaker();
 }
+ImageGetter.prototype.dataGetter = function(clicked,viewed) {
+  this.clicked = clicked;
+  this.viewed = viewed;
+};
+
+(function getLocalStorage() {
+  if(localStorage.dataStore) {
+    var dataStore = localStorage.getItem('dataStore');
+    var data = JSON.parse(dataStore);
+    console.log(data);
+    for(var info of data) {
+      console.log(info);
+      var recall = new ImageGetter(info.name);
+      recall.dataGetter(info.clicked,info.viewed);
+    }
+    totalClicks = 25;
+  } else imageInit();
+})();
 
 function imageInit() {
   for(var i = 0; i < imgName.length; i++) new ImageGetter(imgName[i]);
 }
-imageInit();
 
 for(var i = 0; i < 3; i++) images.push(document.getElementById('img'+(i+1)));
 
 var eventArea = document.getElementById('images');
-var ctx = document.getElementById('chart').getContext('2d');
 eventArea.addEventListener('click', imageDisplay);
 
 function chartDisplay() {
   var clicks = [];
   var views = [];
+  var ctx = document.getElementById('chart').getContext('2d');
+
   for(var i = 0; i < ImageGetter.all.length; i++) {
     clicks.push(ImageGetter.all[i].clicked);
     views.push(ImageGetter.all[i].viewed);
   }
+
   var chart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -108,16 +127,9 @@ function imageDisplay() {
   };
   if(totalClicks === 25) {
     chartDisplay();
-    eventArea.removeEventListener('click',imageDisplay); 
+    eventArea.removeEventListener('click',imageDisplay);
     var dataStore = JSON.stringify(ImageGetter.all);
     localStorage.setItem('dataStore', dataStore);
   }
 }
 imageDisplay();
-(function getLocalStorage() {
-  if(localStorage.dataStore) {
-    var dataStore = localStorage.getItem('dataStore');
-    var data = JSON.parse(dataStore);
-    console.log(data);
-  }
-})();
