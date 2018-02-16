@@ -72,6 +72,10 @@ div p {
     width: 960px;
     margin: 0px auto;
 }
+#clear-storage {
+    margin-left: 47%;
+    margin-bottom: 10px;
+}
 footer {
     height: 100px;
     background-color: lightgreen;

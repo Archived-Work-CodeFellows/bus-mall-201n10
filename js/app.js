@@ -130,6 +130,18 @@ function imageDisplay() {
     eventArea.removeEventListener('click',imageDisplay);
     var dataStore = JSON.stringify(ImageGetter.all);
     localStorage.setItem('dataStore', dataStore);
+
+    var clear = document.createElement('button');
+    clear.setAttribute('id','clear-storage');
+    clear.textContent = 'Want to restart?';
+    var mainEl = document.getElementsByTagName('main');
+    mainEl[0].appendChild(clear);
+
+    clear.addEventListener('click',clearLocalStorage);
+  }
+  function clearLocalStorage() {
+    localStorage.clear();
+    location.reload();
   }
 }
 imageDisplay();
