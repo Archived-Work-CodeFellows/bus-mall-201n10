@@ -6,34 +6,24 @@ var images = [];
 var compare = [];
 var compare2 = [];
 var randomIndex = [];
+var imgName = ['Bag','Banana','Bathroom','Boots','Breakfast','Bubblegum','Chair','Cthulhu','Dog-duck','Dragon','Pen','Pet-sweep','Tauntaun','Unicorn','Usb','Water-can','Wine-glass'];
 
-function ImageGetter(name, path){
+function ImageGetter(name){
   this.name = name;
-  this.path = path;
+  this.path = '';
   this.clicked = 0;
   this.viewed = 0;
   ImageGetter.all.push(this);
+  this.pathMaker = function(){
+    var firstLetter = name.slice(0,1).toLowerCase();
+    if(firstLetter+name.slice(1,name.length) === 'usb') return this.path ='img/'+ firstLetter + name.slice(1,name.length) + '.gif';
+    else return this.path ='img/'+ firstLetter + name.slice(1,name.length) + '.jpg';
+  };
+  this.pathMaker();
 }
 
-new ImageGetter('Bag', 'img/bag.jpg');
-new ImageGetter('Banana', 'img/banana.jpg');
-new ImageGetter('Bathroom', 'img/bathroom.jpg');
-new ImageGetter('Boots', 'img/boots.jpg');
-new ImageGetter('Breakfast', 'img/breakfast.jpg');
-new ImageGetter('Bubblegum', 'img/bubblegum.jpg');
-new ImageGetter('Chair', 'img/chair.jpg');
-new ImageGetter('Cthulhu', 'img/cthulhu.jpg');
-new ImageGetter('Dog-duck', 'img/dog-duck.jpg');
-new ImageGetter('Dragon', 'img/dragon.jpg');
-new ImageGetter('Pen', 'img/pen.jpg');
-new ImageGetter('Pet-sweep', 'img/pet-sweep.jpg');
-new ImageGetter('Tauntaun', 'img/tauntaun.jpg');
-new ImageGetter('Unicorn', 'img/unicorn.jpg');
-new ImageGetter('Usb', 'img/usb.gif');
-new ImageGetter('Water-can', 'img/water-can.jpg');
-new ImageGetter('Wine-glass', 'img/wine-glass.jpg');
-
-for(var i = 0; i < 3; i++) images.push(document.getElementById('img'+(i+1)));
+for(var i = 0; i < imgName.length; i++) new ImageGetter(imgName[i]);
+for(i = 0; i < 3; i++) images.push(document.getElementById('img'+(i+1)));
 
 var eventArea = document.getElementById('images');
 var ctx = document.getElementById('chart').getContext('2d');
@@ -42,16 +32,14 @@ eventArea.addEventListener('click', imageDisplay);
 function chartDisplay() {
   var clicks = [];
   var views = [];
-  var labels = [];
   for(var i = 0; i < ImageGetter.all.length; i++) {
     clicks.push(ImageGetter.all[i].clicked);
-    labels.push(ImageGetter.all[i].name);
     views.push(ImageGetter.all[i].viewed);
   }
   var chart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: labels,
+      labels: imgName,
       datasets: [{
         label: '# of votes',
         data: clicks,
@@ -76,7 +64,6 @@ function chartDisplay() {
     }
   });
 }
-
 function imageDisplay() {
   var indexRand = 0;
   for(var k = 0; k < images.length; k++) compare2[k] = randomIndex[k];
@@ -86,7 +73,6 @@ function imageDisplay() {
     randomIndex[i] = indexRand;
     for(var j = 0; j < images.length; j++){
       if(compare2[j] === randomIndex[i] || compare[j] === randomIndex[i]) {
-        console.log('Duplicate');
         if(i === 0) {
           do{
             indexRand = Math.floor(Math.random()*ImageGetter.all.length);
