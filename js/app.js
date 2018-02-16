@@ -110,9 +110,8 @@ function imageDisplay() {
     compare[i] = randomIndex[i];
   }
   for(i = 0; i < 3; i++) images[i].src = ImageGetter.all[randomIndex[i]].path;
-  for(i = 0; i < images.length; i++) {
-    ImageGetter.all[randomIndex[i]].viewed++;
-  }
+  for(i = 0; i < images.length; i++) ImageGetter.all[randomIndex[i]].viewed++;
+
   images[0].onclick = function (){
     ImageGetter.all[randomIndex[0]].clicked++;
     totalClicks++;
@@ -134,8 +133,8 @@ function imageDisplay() {
     var clear = document.createElement('button');
     clear.setAttribute('id','clear-storage');
     clear.textContent = 'Want to restart?';
-    var mainEl = document.getElementsByTagName('main');
-    mainEl[0].appendChild(clear);
+    var mainEl = document.getElementById('storage-button');
+    mainEl.appendChild(clear);
 
     clear.addEventListener('click',clearLocalStorage);
   }
