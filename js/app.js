@@ -28,11 +28,11 @@ ImageGetter.prototype.dataGetter = function(clicked,viewed) {
 
 (function getLocalStorage() {
   if(localStorage.dataStore) {
+
     var dataStore = localStorage.getItem('dataStore');
     var data = JSON.parse(dataStore);
-    console.log(data);
+
     for(var info of data) {
-      console.log(info);
       var recall = new ImageGetter(info.name);
       recall.dataGetter(info.clicked,info.viewed);
     }
@@ -110,7 +110,9 @@ function imageDisplay() {
     compare[i] = randomIndex[i];
   }
   for(i = 0; i < 3; i++) images[i].src = ImageGetter.all[randomIndex[i]].path;
-  for(i = 0; i < images.length; i++) ImageGetter.all[randomIndex[i]].viewed++;
+  if(totalClicks < 25) {
+    for(i = 0; i < images.length; i++) ImageGetter.all[randomIndex[i]].viewed++;
+  }
 
   images[0].onclick = function (){
     ImageGetter.all[randomIndex[0]].clicked++;
