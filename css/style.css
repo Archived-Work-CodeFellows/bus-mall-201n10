@@ -72,6 +72,12 @@ div p {
     width: 960px;
     margin: 0px auto;
 }
+#storage-button {
+    text-align: center;
+}
+#clear-storage {
+    margin: 10px auto;
+}
 footer {
     height: 100px;
     background-color: lightgreen;
